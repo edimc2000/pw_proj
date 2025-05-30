@@ -51,7 +51,7 @@ export default class ToDoListPage {
     async countTask(expectedNumberOfTasks: number) {
         // console.log('nO OF TASKSS:', (await this.locators.getPanelToDosListMarker.count()))
         // console.log('EXPECTED:', expectedNumberOfTasks)
-        expect(await this.locators.getPanelToDosListLastItem.count()).toBe(expectedNumberOfTasks)
+        expect(await this.locators.getPanelToDosListMarker.count()).toBe(expectedNumberOfTasks)
     }
 
     async markComplete (row: number) {
