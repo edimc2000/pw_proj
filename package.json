@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test", 
-    "headed": "npx playwright test --headed", 
+    "headed": "npx playwright test --headed --workers 15", 
     "ui": "npx playwright test --ui"
   },
   "repository": {

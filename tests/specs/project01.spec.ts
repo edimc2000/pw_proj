@@ -5,8 +5,6 @@ import { parse } from 'csv-parse/sync';
 
 import ToDoListPage from '../pages/project01-ToDoList.page.spec'
 
-
-
 test.describe('TG Todo List', () => {
     let locators
     let methods
@@ -23,7 +21,6 @@ test.describe('TG Todo List', () => {
         locators = methods.locators
         await page.setViewportSize({ width: 1440, height: 1440 });
         await page.goto('https://www.techglobal-training.com/frontend/todo-list')
-
     })
 
     /*
