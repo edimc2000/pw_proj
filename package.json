@@ -2,7 +2,9 @@
   "name": "pw_proj",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "ui": "npx playwright test --ui"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/edimc2000/pw_proj.git"

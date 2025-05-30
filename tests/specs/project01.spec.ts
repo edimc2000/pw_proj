@@ -22,6 +22,7 @@ test.describe('TG Todo List', () => {
         locators = methods.locators
         await page.setViewportSize({ width: 1440, height: 1440 });
         await page.goto('https://www.techglobal-training.com/frontend/todo-list')
+
     })
 
     /*
@@ -55,7 +56,7 @@ test.describe('TG Todo List', () => {
     * 9. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
     test('[TC02] Single Task Addition and Removal', async ({ page }) => {
-        let taskArr = sampleToDoData.slice(0,1) // 1 task coming from the csv file
+        let taskArr = sampleToDoData.slice(0, 1) // 1 task coming from the csv file
 
         await methods.createVerifyAndMark(taskArr)
         await methods.countTask(taskArr.length)
@@ -72,7 +73,7 @@ test.describe('TG Todo List', () => {
     * 5. Click on the “Remove completed tasks!” button to clear them.
     * 6. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
-    test('[TC03] Multiple Task Operations', async ({ page })  => {
+    test('[TC03] Multiple Task Operations', async ({ page }) => {
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
 
         await methods.createVerifyAndMark(taskArr)
@@ -86,14 +87,52 @@ test.describe('TG Todo List', () => {
     * 1. Navigate to https://techglobal-training.com/frontend/todo-list
     * 2. Enter and add 5 to-do items individually.
     * 3. Validate that all added items match the items displayed on the list.
-    4. Enter the complete name of the previously added to-do item into the search bar.
-    5. Validate that the list is now filtered to show only the item you searched for.
-    6. Validate that the number of tasks visible in the list is exactly one.
+    * 4. Enter the complete name of the previously added to-do item into the search bar.
+    * 5. Validate that the list is now filtered to show only the item you searched for.
+    * 6. Validate that the number of tasks visible in the list is exactly one.
     */
-    test.only('[TC04] Search and Filter Functionality in todo App', async ({ page }) => {
+    test('[TC04] Search and Filter Functionality in todo App', async ({ page }) => {
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
-
+        let task = sampleToDoData[0]  // search for this task
         await methods.createVerifyAndMark(taskArr)
+        await methods.searchTask(task.toDo)
+        await methods.verifyTaskOnList(task.toDo)
+        await methods.countTask(1)
+
+    })
+
+
+    /* [TC05] Task Validation and Error Handling
+    * 1. Navigate to https://techglobal-training.com/frontend/todo-list
+    * 2. Attempt to add an empty task to the to-do list.
+    * 3. Validate that the task list is empty, displaying the message “No task found!”.
+    * 4. Enter an item name exceeding 30 characters into the list.
+    * 5. Validate error message appears and says “Error: Todo cannot be more than 30 characters!”.
+    * 6. Add a valid item name to the list.
+    * 7. Validate that the active task count is exactly one.
+    * 8. Try to enter an item with the same name already present on the list.
+    * 9. Validate that an error message is displayed, indicating “Error: You already have {ITEM} in your todo list.”.
+    */
+
+    test('[TC05] Task Validation and Error Handling', async ({ page }) => {
+
+        let task = sampleToDoData[0].toDo
+        let task30PlusChars = 'this is more than 30 characters..!'
+
+        await methods.createTask('')
+        await methods.verifyTaskPanelIsEmpty()
+
+        await methods.createTask(task30PlusChars)
+        await methods.verifyErrorMoreThanMaxChars()
+
+        await methods.createTask(task)
+        await methods.verifyTaskOnList(task)
+        await methods.countTask(1)
+
+        await methods.createTask(task)
+        await methods.verifyErrorDuplicate(task)
+
+
     })
 
 })

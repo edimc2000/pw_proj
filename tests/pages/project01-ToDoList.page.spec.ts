@@ -25,10 +25,12 @@ export default class ToDoListPage {
             getPanelToDoDelete: page.locator('.destroy'),
             getRemoveCompleted: page.locator('#clear'),
             getErrorContainer: page.locator('.notification.is-danger')
-
         }
     }
 
+
+    // Methods 
+    
     /**
      * @param task is the sting value of the task 
      */
@@ -64,6 +66,12 @@ export default class ToDoListPage {
     async verifyTaskPanelIsEmpty() {
         expect(await this.locators.getTextMessageContainer).toHaveText('No tasks found!')
     }
+    async verifyErrorDuplicate(task) {
+        expect(await this.locators.getErrorContainer).toHaveText(`Error: You already have ${task} in your todo list.`)
+    }
+    async verifyErrorMoreThanMaxChars() {
+        expect(await this.locators.getErrorContainer).toHaveText(`Error: Todo cannot be more than 30 characters!`)
+    }
 
     async createVerifyAndMark(taskArr) {
         for (const toDo of taskArr) {
@@ -85,6 +93,7 @@ export default class ToDoListPage {
 
     }
 
-
-
+    async searchTask(task) {
+        await this.locators.getFieldSearch.fill(task)
+    }
 }
