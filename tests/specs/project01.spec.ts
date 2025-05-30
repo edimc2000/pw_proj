@@ -12,7 +12,8 @@ test.describe('TG Todo List', () => {
     let methods
 
     // covert sampleToDoData csv to JS Object
-    const sampleToDoData = parse(fs.readFileSync(path.join(__dirname, '..', 'data/project01toDoListPageSampleData.csv')), {
+    const csvFile = `${path.join(__dirname, '..', 'data/project01toDoListPageSampleData.csv')}`
+    const sampleToDoData = parse(fs.readFileSync(csvFile), {
         columns: true,
         skip_empty_lines: true
     });
@@ -35,12 +36,11 @@ test.describe('TG Todo List', () => {
     * 6. Validate that the task list is empty, displaying the message “No tasks found!”
     */
     test('[TC01] Todo-App Modal Verification', async ({ page }) => {
-        expect(await locators.getTextModalTitle).toHaveText('My Tasks')
-        expect(await locators.getFieldAddToDo).toBeEnabled()
-        expect(await locators.getButtonAdd).toBeEnabled()
-        expect(await locators.getFieldSearch).toBeEnabled()
-        expect(await locators.getPanelToDosContainer).toBeHidden()
-        await page.waitForTimeout(100)
+        await expect(locators.getTextModalTitle).toHaveText('My Tasks')
+        await expect(locators.getFieldAddToDo).toBeEnabled()
+        await expect(locators.getButtonAdd).toBeEnabled()
+        await expect(locators.getFieldSearch).toBeEnabled()
+        await expect(locators.getPanelToDosContainer).toBeHidden()
     })
 
     /* 
@@ -94,11 +94,11 @@ test.describe('TG Todo List', () => {
     test('[TC04] Search and Filter Functionality in todo App', async ({ page }) => {
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
         let task = sampleToDoData[0]  // search for this task
+
         await methods.createVerifyAndMark(taskArr)
         await methods.searchTask(task.toDo)
         await methods.verifyTaskOnList(task.toDo)
         await methods.countTask(1)
-
     })
 
 
@@ -115,7 +115,6 @@ test.describe('TG Todo List', () => {
     */
 
     test('[TC05] Task Validation and Error Handling', async ({ page }) => {
-
         let task = sampleToDoData[0].toDo
         let task30PlusChars = 'this is more than 30 characters..!'
 
@@ -131,8 +130,7 @@ test.describe('TG Todo List', () => {
 
         await methods.createTask(task)
         await methods.verifyErrorDuplicate(task)
-
-
     })
+
 
 })
