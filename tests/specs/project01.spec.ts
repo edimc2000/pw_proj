@@ -17,12 +17,7 @@ test.describe('TG Todo List', () => {
         skip_empty_lines: true
     });
 
-    console.log(sampleToDoData)
-    console.log(sampleToDoData[0].toDo)
-
-
     test.beforeEach(async ({ page }) => {
-
         methods = new ToDoListPage(page)
         locators = methods.locators
         await page.setViewportSize({ width: 1440, height: 1440 });
@@ -99,8 +94,6 @@ test.describe('TG Todo List', () => {
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
 
         await methods.createVerifyAndMark(taskArr)
-
-
     })
 
 })
