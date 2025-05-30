@@ -61,7 +61,6 @@ test.describe('TG Todo List', () => {
         await methods.verifyTaskPanelIsEmpty()
     })
 
-
     /* [TC03] Multiple Task Operations
     * 1. Navigate to https://techglobal-training.com/frontend/todo-list
     * 2. Enter and add 5 to-do items individually.
@@ -78,7 +77,6 @@ test.describe('TG Todo List', () => {
         await methods.clickRemoveCompletedTask()
         await methods.verifyTaskPanelIsEmpty()
     })
-
 
     /* [TC04] Search and Filter Functionality in todo App
     * 1. Navigate to https://techglobal-training.com/frontend/todo-list
@@ -98,7 +96,6 @@ test.describe('TG Todo List', () => {
         await methods.countTask(1)
     })
 
-
     /* [TC05] Task Validation and Error Handling
     * 1. Navigate to https://techglobal-training.com/frontend/todo-list
     * 2. Attempt to add an empty task to the to-do list.
@@ -110,7 +107,6 @@ test.describe('TG Todo List', () => {
     * 8. Try to enter an item with the same name already present on the list.
     * 9. Validate that an error message is displayed, indicating “Error: You already have {ITEM} in your todo list.”.
     */
-
     test('[TC05] Task Validation and Error Handling', async ({ page }) => {
         let task = sampleToDoData[0].toDo
         let task30PlusChars = 'this is more than 30 characters..!'
@@ -128,6 +124,4 @@ test.describe('TG Todo List', () => {
         await methods.createTask(task)
         await methods.verifyErrorDuplicate(task)
     })
-
-
 })

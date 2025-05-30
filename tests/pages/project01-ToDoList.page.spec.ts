@@ -27,22 +27,20 @@ export default class ToDoListPage {
             getErrorContainer: page.locator('.notification.is-danger')
         }
     }
-
-
     // Methods 
-    
+
     /**
      * @param task is the sting value of the task 
      */
-    async createTask(task) {
+    async createTask(task: string) {
         await this.locators.getFieldAddToDo.clear()
         await this.locators.getFieldAddToDo.fill(task)
         await this.locators.getButtonAdd.click()
     }
 
     /**
-     * @param  task - last task on the list to verify
-     */
+    * @param  task - last task on the list to verify
+    */
     async verifyTaskOnList(task: string) {
         expect(await this.locators.getPanelToDosListLastItem).toHaveText(task)
     }
@@ -73,7 +71,7 @@ export default class ToDoListPage {
         expect(await this.locators.getErrorContainer).toHaveText(`Error: Todo cannot be more than 30 characters!`)
     }
 
-    async createVerifyAndMark(taskArr) {
+    async createVerifyAndMark(taskArr: string[]) {
         for (const toDo of taskArr) {
             await this.createTask(toDo.toDo)
             await this.verifyTaskOnList(toDo.toDo)
@@ -81,19 +79,19 @@ export default class ToDoListPage {
         }
     }
 
-    async removeTaskPerRow(taskArr) {
+    async removeTaskPerRow(taskArr: string[]) {
         for (const toDo of taskArr) {
             await this.removeLastRowTask()
         }
 
     }
 
-    async clickRemoveCompletedTask(){
+    async clickRemoveCompletedTask() {
         await this.locators.getRemoveCompleted.click()
 
     }
 
-    async searchTask(task) {
+    async searchTask(task: string) {
         await this.locators.getFieldSearch.fill(task)
     }
 }
