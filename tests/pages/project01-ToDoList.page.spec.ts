@@ -44,7 +44,7 @@ export default class ToDoListPage {
     async verifyTaskOnList(task: string) {
         expect(await this.locators.getPanelToDosListLastItem).toHaveText(task)
     }
-    
+
     /**
     * @param {number} expectedNumberOfTasks  
     */
@@ -52,17 +52,39 @@ export default class ToDoListPage {
         expect(await this.locators.getPanelToDosListMarker.count()).toBe(expectedNumberOfTasks)
     }
 
-    async markComplete (row: number) {
-         await this.locators.getPanelToDosListLastItem.click()
-         expect(await this.locators.getPanelToDosListMarker.last()).toHaveClass(/has-text-success/)
+    async markComplete() {
+        await this.locators.getPanelToDosListLastItem.click()
+        expect(await this.locators.getPanelToDosListMarker.last()).toHaveClass(/has-text-success/)
     }
 
-    async removeLastRowTask () {
-          await this.locators.getPanelRemoveTaskLastRow.click()
-     }
+    async removeLastRowTask() {
+        await this.locators.getPanelRemoveTaskLastRow.click()
+    }
 
-     async verifyTaskPanelIsEmpty () {
+    async verifyTaskPanelIsEmpty() {
         expect(await this.locators.getTextMessageContainer).toHaveText('No tasks found!')
-     }
+    }
+
+    async createVerifyAndMark(taskArr) {
+        for (const toDo of taskArr) {
+            await this.createTask(toDo.toDo)
+            await this.verifyTaskOnList(toDo.toDo)
+            await this.markComplete()
+        }
+    }
+
+    async removeTaskPerRow(taskArr) {
+        for (const toDo of taskArr) {
+            await this.removeLastRowTask()
+        }
+
+    }
+
+    async clickRemoveCompletedTask(){
+        await this.locators.getRemoveCompleted.click()
+
+    }
+
+
 
 }

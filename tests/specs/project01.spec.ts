@@ -57,50 +57,50 @@ test.describe('TG Todo List', () => {
     * 6. Validate item is marked as completed.
     * 7. Click on the button to remove the item you have added.
     * 8. Remove the completed task by clicking the designated removal button.
-    9. Validate that the task list is empty, displaying the message “No tasks found!”.
+    * 9. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
-    test.only('[TC02] Single Task Addition and Removal', async ({ page }) => {
-        let taskArr = sampleToDoData.slice(0,1)
+    test('[TC02] Single Task Addition and Removal', async ({ page }) => {
+        let taskArr = sampleToDoData.slice(0,1) // 1 task coming from the csv file
 
-        for (const toDo of taskArr) {
-            await methods.createTask(toDo.toDo)
-            await methods.verifyTaskOnList(toDo.toDo)
-            await methods.markComplete(taskArr.length)
-        }
+        await methods.createVerifyAndMark(taskArr)
         await methods.countTask(taskArr.length)
-
-        for (const toDo of taskArr) {
-            await methods.removeLastRowTask()
-        }
-
+        await methods.removeTaskPerRow(taskArr)
         await methods.verifyTaskPanelIsEmpty()
     })
 
 
     /* [TC03] Multiple Task Operations
-    1 * Navigate to https://techglobal-training.com/frontend/todo-list
-    2 * Enter and add 5 to-do items individually.
-    3 * Validate that all added items match the items displayed on the list.
-    4 * Mark all the tasks as completed by clicking on them.
-    5 * Click on the “Remove completed tasks!” button to clear them.
-    6 * Validate that the task list is empty, displaying the message “No tasks found!”.
+    * 1. Navigate to https://techglobal-training.com/frontend/todo-list
+    * 2. Enter and add 5 to-do items individually.
+    * 3. Validate that all added items match the items displayed on the list.
+    * 4. Mark all the tasks as completed by clicking on them.
+    * 5. Click on the “Remove completed tasks!” button to clear them.
+    * 6. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
-    test.only('[TC03] Multiple Task Operations', async ({ page })  => {
+    test('[TC03] Multiple Task Operations', async ({ page })  => {
+        let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
 
-        let taskArr = sampleToDoData.slice(0)
-
-        for (const toDo of taskArr) {
-            await methods.createTask(toDo.toDo)
-            await methods.verifyTaskOnList(toDo.toDo)
-            await methods.markComplete(taskArr.length)
-        }
+        await methods.createVerifyAndMark(taskArr)
         await methods.countTask(taskArr.length)
-
-        for (const toDo of taskArr) {
-            await methods.removeLastRowTask()
-        }
-
+        await methods.clickRemoveCompletedTask()
         await methods.verifyTaskPanelIsEmpty()
+    })
+
+
+    /* [TC04] Search and Filter Functionality in todo App
+    * 1. Navigate to https://techglobal-training.com/frontend/todo-list
+    * 2. Enter and add 5 to-do items individually.
+    * 3. Validate that all added items match the items displayed on the list.
+    4. Enter the complete name of the previously added to-do item into the search bar.
+    5. Validate that the list is now filtered to show only the item you searched for.
+    6. Validate that the number of tasks visible in the list is exactly one.
+    */
+    test.only('[TC04] Search and Filter Functionality in todo App', async ({ page }) => {
+        let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
+
+        await methods.createVerifyAndMark(taskArr)
+
+
     })
 
 })
