@@ -2,14 +2,11 @@ import { expect, test } from '@playwright/test'
 import fs from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync';
-
-import ToDoListPage from '../pages/project01-ToDoList.page.spec'
+import ToDoListPage from '../pages/project01-ToDoList.page.spec';
 
 test.describe('TG Todo List', () => {
-    let locators
-    let methods
 
-    // covert sampleToDoData csv to JS Object
+    // convert sampleToDoData csv to JS Object
     const csvFile = `${path.join(__dirname, '..', 'data/project01toDoListPageSampleData.csv')}`
     const sampleToDoData = parse(fs.readFileSync(csvFile), {
         columns: true,
@@ -17,8 +14,6 @@ test.describe('TG Todo List', () => {
     });
 
     test.beforeEach(async ({ page }) => {
-        methods = new ToDoListPage(page)
-        locators = methods.locators
         await page.setViewportSize({ width: 1440, height: 1440 });
         await page.goto('https://www.techglobal-training.com/frontend/todo-list')
     })
@@ -33,11 +28,13 @@ test.describe('TG Todo List', () => {
     * 6. Validate that the task list is empty, displaying the message “No tasks found!”
     */
     test('[TC01] Todo-App Modal Verification', async ({ page }) => {
-        await expect(locators.getTextModalTitle).toHaveText('My Tasks')
-        await expect(locators.getFieldAddToDo).toBeEnabled()
-        await expect(locators.getButtonAdd).toBeEnabled()
-        await expect(locators.getFieldSearch).toBeEnabled()
-        await expect(locators.getPanelToDosContainer).toBeHidden()
+        const toDoPage = new ToDoListPage(page)
+
+        await expect(toDoPage.locators.getTextModalTitle).toHaveText('My Tasks')
+        await expect(toDoPage.locators.getFieldAddToDo).toBeEnabled()
+        await expect(toDoPage.locators.getButtonAdd).toBeEnabled()
+        await expect(toDoPage.locators.getFieldSearch).toBeEnabled()
+        await expect(toDoPage.locators.getPanelToDosContainer).toBeHidden()
     })
 
     /* 
@@ -53,12 +50,13 @@ test.describe('TG Todo List', () => {
     * 9. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
     test('[TC02] Single Task Addition and Removal', async ({ page }) => {
+        const toDoPage = new ToDoListPage(page)
         let taskArr = sampleToDoData.slice(0, 1) // 1 task coming from the csv file
 
-        await methods.createVerifyAndMark(taskArr)
-        await methods.countTask(taskArr.length)
-        await methods.removeTaskPerRow(taskArr)
-        await methods.verifyTaskPanelIsEmpty()
+        await toDoPage.createVerifyAndMark(taskArr)
+        await toDoPage.countTask(taskArr.length)
+        await toDoPage.removeTaskPerRow(taskArr)
+        await toDoPage.verifyTaskPanelIsEmpty()
     })
 
     /* [TC03] Multiple Task Operations
@@ -70,12 +68,13 @@ test.describe('TG Todo List', () => {
     * 6. Validate that the task list is empty, displaying the message “No tasks found!”.
     */
     test('[TC03] Multiple Task Operations', async ({ page }) => {
+        const toDoPage = new ToDoListPage(page)
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
 
-        await methods.createVerifyAndMark(taskArr)
-        await methods.countTask(taskArr.length)
-        await methods.clickRemoveCompletedTask()
-        await methods.verifyTaskPanelIsEmpty()
+        await toDoPage.createVerifyAndMark(taskArr)
+        await toDoPage.countTask(taskArr.length)
+        await toDoPage.clickRemoveCompletedTask()
+        await toDoPage.verifyTaskPanelIsEmpty()
     })
 
     /* [TC04] Search and Filter Functionality in todo App
@@ -87,13 +86,14 @@ test.describe('TG Todo List', () => {
     * 6. Validate that the number of tasks visible in the list is exactly one.
     */
     test('[TC04] Search and Filter Functionality in todo App', async ({ page }) => {
+        const toDoPage = new ToDoListPage(page)
         let taskArr = sampleToDoData.slice(0) // 5 tasks coming from the csv file
         let task = sampleToDoData[0]  // search for this task
 
-        await methods.createVerifyAndMark(taskArr)
-        await methods.searchTask(task.toDo)
-        await methods.verifyTaskOnList(task.toDo)
-        await methods.countTask(1)
+        await toDoPage.createVerifyAndMark(taskArr)
+        await toDoPage.searchTask(task.toDo)
+        await toDoPage.verifyTaskOnList(task.toDo)
+        await toDoPage.countTask(1)
     })
 
     /* [TC05] Task Validation and Error Handling
@@ -108,20 +108,21 @@ test.describe('TG Todo List', () => {
     * 9. Validate that an error message is displayed, indicating “Error: You already have {ITEM} in your todo list.”.
     */
     test('[TC05] Task Validation and Error Handling', async ({ page }) => {
+        const toDoPage = new ToDoListPage(page)
         let task = sampleToDoData[0].toDo
         let task30PlusChars = 'this is more than 30 characters..!'
 
-        await methods.createTask('')
-        await methods.verifyTaskPanelIsEmpty()
+        await toDoPage.createTask('')
+        await toDoPage.verifyTaskPanelIsEmpty()
 
-        await methods.createTask(task30PlusChars)
-        await methods.verifyErrorMoreThanMaxChars()
+        await toDoPage.createTask(task30PlusChars)
+        await toDoPage.verifyErrorMoreThanMaxChars()
 
-        await methods.createTask(task)
-        await methods.verifyTaskOnList(task)
-        await methods.countTask(1)
+        await toDoPage.createTask(task)
+        await toDoPage.verifyTaskOnList(task)
+        await toDoPage.countTask(1)
 
-        await methods.createTask(task)
-        await methods.verifyErrorDuplicate(task)
+        await toDoPage.createTask(task)
+        await toDoPage.verifyErrorDuplicate(task)
     })
 })

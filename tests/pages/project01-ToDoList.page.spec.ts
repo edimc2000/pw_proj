@@ -1,8 +1,8 @@
-import { Page, expect, test } from "@playwright/test"
+import { Locator, Page, expect, test } from "@playwright/test"
 
 export default class ToDoListPage {
     locators: any
-    page: any
+    page: Page
 
     constructor(page: Page) {
         this.page = page
