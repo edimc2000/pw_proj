@@ -1,32 +1,46 @@
 import { Locator, Page, expect, test } from "@playwright/test"
 
-export default class ToDoListPage {
+export default class ShoppingCartPage {
     locators: any
     page: Page
+    getCardCourses: Locator
+    getTextTotalPrice: Locator
+    getHeadingMain: Locator
+    getSubHeadingCartItems: Locator
+    getItemsOnCart: Locator
+    getButtonPlaceOrder: Locator
+    getContainerOderConfirmation: Locator
+    getButtonCourse0: Locator
+    getHeadingCardCourses: Locator
+    getImageCardCourses: Locator
+    getProviderCardCourses: Locator
+    getTextCardCoursesDiscount: Locator
+    getButtonCardCoursesAdd: Locator
+    getTextCardCoursesFullPrice: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.locators = {
-            getTextPageHeader: page.locator('h1.is-size-3'),
-            getTextModalTitle: page.locator('.panel-heading.has-text-white'),
-            getButtonAdd: page.locator('#add-btn'),
-            getFieldAddToDo: page.locator('#input-add'),
-            getFieldSearch: page.locator('#search'),
-            getTextMessageContainer: page.locator('.ml-1.has-text-danger'),
-            getPanelToDosContainer: page.locator('#panel'),
 
-            getPanelToDosList: page.locator('.panel-block.todo-item div'),
-            getPanelToDosListMarker: page.locator('.panel-block.todo-item div span:first-child'),
-            getPanelToDosListLastItem: page.locator('div.panel-block div span:last-child').last(),
+        // locators 
+        this.getHeadingMain = page.locator('.section h1.mt-2')
+        this.getCardCourses = page.locator('[id^="course-"]')
+        this.getHeadingCardCourses = page.locator('[id^="course-"] h3')
+        this.getImageCardCourses = page.locator('[id^="course-"] img')
+        this.getProviderCardCourses = page.locator('[id^="course-"] .my-3')
+        this.getTextCardCoursesDiscount = page.locator('[id^="course-"] [data-testid="discount"]')
+        this.getButtonCardCoursesAdd = page.locator('[id^="course-"] button')
+        this.getTextCardCoursesFullPrice = page.locator('[id^="course-"] [data-testid="full-price"]')
 
-            getPanelToDoMarkNotDone: page.locator('.panel-icon:nth-child(odd)'),
-            getPanelRemoveTaskLastRow: page.locator('.panel-block.todo-item .destroy').last(),
+        this.getSubHeadingCartItems = page.locator('.mb-2')
+        this.getItemsOnCart = page.locator('.course-card')
+        this.getTextTotalPrice = page.locator('#total-price')
+        this.getButtonPlaceOrder = page.getByRole('button', { name: 'Place Order' })
+        this.getContainerOderConfirmation = page.locator('.notification')
 
-            getPanelToDoDelete: page.locator('.destroy'),
-            getRemoveCompleted: page.locator('#clear'),
-            getErrorContainer: page.locator('.notification.is-danger')
-        }
+        this.getButtonCourse0 = page.locator('#course-1 button')
     }
+
+
     // Methods 
 
     /**
@@ -38,60 +52,4 @@ export default class ToDoListPage {
         await this.locators.getButtonAdd.click()
     }
 
-    /**
-    * @param  task - last task on the list to verify
-    */
-    async verifyTaskOnList(task: string) {
-        expect(await this.locators.getPanelToDosListLastItem).toHaveText(task)
-    }
-
-    /**
-    * @param {number} expectedNumberOfTasks  
-    */
-    async countTask(expectedNumberOfTasks: number) {
-        expect(await this.locators.getPanelToDosListMarker.count()).toBe(expectedNumberOfTasks)
-    }
-
-    async markComplete() {
-        await this.locators.getPanelToDosListLastItem.click()
-        expect(await this.locators.getPanelToDosListMarker.last()).toHaveClass(/has-text-success/)
-    }
-
-    async removeLastRowTask() {
-        await this.locators.getPanelRemoveTaskLastRow.click()
-    }
-
-    async verifyTaskPanelIsEmpty() {
-        expect(await this.locators.getTextMessageContainer).toHaveText('No tasks found!')
-    }
-    async verifyErrorDuplicate(task) {
-        expect(await this.locators.getErrorContainer).toHaveText(`Error: You already have ${task} in your todo list.`)
-    }
-    async verifyErrorMoreThanMaxChars() {
-        expect(await this.locators.getErrorContainer).toHaveText(`Error: Todo cannot be more than 30 characters!`)
-    }
-
-    async createVerifyAndMark(taskArr: string[]) {
-        for (const toDo of taskArr) {
-            await this.createTask(toDo.toDo)
-            await this.verifyTaskOnList(toDo.toDo)
-            await this.markComplete()
-        }
-    }
-
-    async removeTaskPerRow(taskArr: string[]) {
-        for (const toDo of taskArr) {
-            await this.removeLastRowTask()
-        }
-
-    }
-
-    async clickRemoveCompletedTask() {
-        await this.locators.getRemoveCompleted.click()
-
-    }
-
-    async searchTask(task: string) {
-        await this.locators.getFieldSearch.fill(task)
-    }
 }
