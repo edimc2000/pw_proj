@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
-import ShoppingCartPage from '../pages/project07-ShoppingCart.pageJS.spec'
+import ShoppingCartPage from '../pages/project07-ShoppingCart.page.spec'
 
 
 
