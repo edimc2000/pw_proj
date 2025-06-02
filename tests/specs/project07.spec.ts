@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
-import ShoppingCartPage from '../pages/project07-ShoppingCart.page.spec'
+import ShoppingCartPage from '../pages/project07-ShoppingCart.pageTS.spec'
 
 
 
@@ -73,6 +73,37 @@ test.describe('TG Todo List', () => {
                 expect(shoppingCartPage.getButtonCardCoursesAdd.nth(i)).toBeVisible
             })
         }
+
+    })
+
+    /*
+    [TC02] - Cart Section Validation
+    * 1. Navigate to https://techglobal-training.com/frontend/shopping-cart
+    2. Validate the heading is “Items Added to Cart”
+    3. Validate that the cart is empty by default
+    4. Validate that the total price is zero “$0” by default
+    5. Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”
+    */
+
+    test('[TC02] - Cart Section Validation', async ({ page }) => {
+        const shoppingCartPage = new ShoppingCartPage(page)
+
+        test.step(`[Step 2] - Validate the heading is “Items Added to Cart”`, async () => {
+            expect(await shoppingCartPage.getSubHeadingCartItems.innerText()).toBe('Items Added to Cart')
+        })
+
+        test.step(`[Step 3] - Validate that the cart is empty by default`, async () => {
+            await expect( shoppingCartPage.getItemsOnCart).not.toBeAttached()
+        })
+
+        test.step(`[Step 4] - Validate that the total price is zero “$0” by default`, async () => {
+            await expect( shoppingCartPage.getTextTotalPrice).toContainText('$0')
+        })
+
+        test.step(`[Step 5] - Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”`, async () => {
+            await expect( shoppingCartPage.getButtonPlaceOrder).toHaveText('Place Order')
+            await expect( shoppingCartPage.getButtonPlaceOrder).toBeEnabled()
+        })
 
     })
 
