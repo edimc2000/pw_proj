@@ -5,11 +5,13 @@
   "scripts": {
     "test": "npx playwright test", 
     "headed": "npx playwright test --headed --workers 15", 
-    "ui": "npx playwright test --ui"
+    "ui": "npx playwright test --ui",
+    "traceon": "npx playwright test 07 --trace on"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/edimc2000/pw_proj.git"
+    
   },
   "keywords": [],
   "author": "",
