@@ -1,24 +1,7 @@
 import { Locator, Page, expect, test } from "@playwright/test"
 
 export default class ShoppingCartPage {
-    locators: any
-    page: Page
-    getCardCourses: Locator
-    getTextTotalPrice: Locator
-    getHeadingMain: Locator
-    getSubHeadingCartItems: Locator
-    getItemsOnCart: Locator
-    getButtonPlaceOrder: Locator
-    getContainerOderConfirmation: Locator
-    getButtonCourse0: Locator
-    getHeadingCardCourses: Locator
-    getImageCardCourses: Locator
-    getProviderCardCourses: Locator
-    getTextCardCoursesDiscount: Locator
-    getButtonCardCoursesAdd: Locator
-    getTextCardCoursesFullPrice: Locator
-
-    constructor(page: Page) {
+    constructor(page) {
         this.page = page
 
         // locators 
@@ -46,10 +29,10 @@ export default class ShoppingCartPage {
     /**
      * @param task is the sting value of the task 
      */
-    async createTask(task: string) {
-        await this.locators.getFieldAddToDo.clear()
-        await this.locators.getFieldAddToDo.fill(task)
-        await this.locators.getButtonAdd.click()
+    async createTask(task) {
+        // await this.locators.getFieldAddToDo.clear()
+        // await this.locators.getFieldAddToDo.fill(task)
+        // await this.locators.getButtonAdd.click()
     }
 
 }
