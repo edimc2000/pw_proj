@@ -119,7 +119,7 @@ test.describe('TG Todo List', () => {
     7. Validate that the cart is empty
     */
 
-    /*********     this loging with other methods will be good with tc 04 and 05 as well  */
+    /*********     this logic with other methods will be good with tc 04 and 05 as well  */
     test('[TC03] - Add a Course to the Cart and Validate', async ({ page }) => {
         const shoppingCartPage = new ShoppingCartPage(page)
         await shoppingCartPage.addProgramToCart(sampleShoppingCartData[0].program)
