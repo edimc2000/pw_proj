@@ -102,7 +102,7 @@ test.describe('TG Todo List', () => {
 
         test.step(`[Step 5] - Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”`, async () => {
             await expect( shoppingCartPage.getButtonPlaceOrder).toHaveText('Place Order')
-            await expect( shoppingCartPage.getButtonPlaceOrder).toBeEnabled()
+            await expect( shoppingCartPage.getButtonPlaceOrder).toBeDisabled()
         })
 
     })
