@@ -79,10 +79,10 @@ test.describe('TG Todo List', () => {
     /*
     [TC02] - Cart Section Validation
     * 1. Navigate to https://techglobal-training.com/frontend/shopping-cart
-    2. Validate the heading is “Items Added to Cart”
-    3. Validate that the cart is empty by default
-    4. Validate that the total price is zero “$0” by default
-    5. Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”
+    * 2. Validate the heading is “Items Added to Cart”
+    * 3. Validate that the cart is empty by default
+    * 4. Validate that the total price is zero “$0” by default
+    * 5. Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”
     */
 
     test('[TC02] - Cart Section Validation', async ({ page }) => {
@@ -93,18 +93,39 @@ test.describe('TG Todo List', () => {
         })
 
         test.step(`[Step 3] - Validate that the cart is empty by default`, async () => {
-            await expect( shoppingCartPage.getItemsOnCart).not.toBeAttached()
+            await expect(shoppingCartPage.getItemsOnCart).not.toBeAttached()
         })
 
         test.step(`[Step 4] - Validate that the total price is zero “$0” by default`, async () => {
-            await expect( shoppingCartPage.getTextTotalPrice).toContainText('$0')
+            await expect(shoppingCartPage.getTextTotalPrice).toContainText('$0')
         })
 
         test.step(`[Step 5] - Validate that there is a “Place Order” button is displayed, disabled, and has the text “Place Order”`, async () => {
-            await expect( shoppingCartPage.getButtonPlaceOrder).toHaveText('Place Order')
-            await expect( shoppingCartPage.getButtonPlaceOrder).toBeDisabled()
+            await expect(shoppingCartPage.getButtonPlaceOrder).toHaveText('Place Order')
+            await expect(shoppingCartPage.getButtonPlaceOrder).toBeDisabled()
         })
 
+    })
+
+
+    /*
+    [TC03] - Add a Course to the Cart and Validate
+    1. Navigate to https://techglobal-training.com/frontend/shopping-cart
+    2. Click on the “Add to Cart” button for one of the courses
+    3. Validate that the course is displayed in the cart with its image, name, and discount amount if available
+    4. Validate that the course price is added to the total price ''including'' the discount amount
+    5. Click on the “Place Order” button
+    6. Validate a success message is displayed with the text “Your order has been placed.”
+    7. Validate that the cart is empty
+    */
+
+    /*********     this loging with other methods will be good with tc 04 and 05 as well  */
+    test('[TC03] - Add a Course to the Cart and Validate', async ({ page }) => {
+        const shoppingCartPage = new ShoppingCartPage(page)
+        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[0].program)
+        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[1].program)
+        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[2].program)
+        await page.waitForTimeout(5000)
     })
 
 })

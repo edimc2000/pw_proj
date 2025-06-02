@@ -45,10 +45,8 @@ export default class ShoppingCartPage {
     /**
      * @param task is the sting value of the task 
      */
-    async createTask(task: string) {
-        // await this.locators.getFieldAddToDo.clear()
-        // await this.locators.getFieldAddToDo.fill(task)
-        // await this.locators.getButtonAdd.click()
+    async addProgramToCart(task: string) {
+        await this.getCardCourses.filter({ hasText: task }).getByRole('button', { name: 'Add to Cart' }).click()
     }
 
 }
