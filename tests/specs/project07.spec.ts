@@ -6,7 +6,7 @@ import ShoppingCartPage from '../pages/project07-ShoppingCart.pageTS.spec'
 
 
 
-test.describe('TG Todo List', () => {
+test.describe('TG Shopping Cart', () => {
 
     // convert sampleToDoData csv to JS Object
     const csvFile = `${path.join(__dirname, '..', 'data/07-shoppingCartSampleData.csv')}`
