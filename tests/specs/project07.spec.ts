@@ -110,22 +110,60 @@ test.describe('TG Todo List', () => {
 
     /*
     [TC03] - Add a Course to the Cart and Validate
+    * 1. Navigate to https://techglobal-training.com/frontend/shopping-cart
+    * 2. Click on the “Add to Cart” button for one of the courses
+    * 3. Validate that the course is displayed in the cart with its image, name, and discount amount if available
+    * 4. Validate that the course price is added to the total price ''including'' the discount amount
+    * 5. Click on the “Place Order” button
+    * 6. Validate a success message is displayed with the text “Your order has been placed.”
+    * 7. Validate that the cart is empty
+    */
+
+    test('[TC03] - Add a Course to the Cart and Validate', async ({ page }, testInfo) => {
+        const shoppingCartPage = new ShoppingCartPage(page)
+        const data = sampleShoppingCartData.slice(0, 1)
+        await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
+    })
+
+    /* 
+   [TC04] - Add Two Courses to the Cart and Validate
+   1. Navigate to https://techglobal-training.com/frontend/shopping-cart
+   2. Click on the “Add to Cart” button for one of the courses
+   3. Click on the “Add to Cart” button for another course
+   4. Validate that the courses are displayed in the cart with their image, name, and discount amount if available
+   5. Validate that the course prices are added to the total price ''including'' the discount amounts
+   6. Click on the “Place Order” button
+   7. Validate a success message is displayed with the text “Your order has been placed.”
+   8. Validate that the cart is empty
+   */
+
+
+    test('[TC04] - Add Two Courses to the Cart and Validate', async ({ page }, testInfo) => {
+        const shoppingCartPage = new ShoppingCartPage(page)
+        const data = sampleShoppingCartData.slice(0, 2)
+        await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
+
+    })
+
+    /*
+    [TC05] Add All Three Courses to the Cart and Validate
     1. Navigate to https://techglobal-training.com/frontend/shopping-cart
-    2. Click on the “Add to Cart” button for one of the courses
-    3. Validate that the course is displayed in the cart with its image, name, and discount amount if available
-    4. Validate that the course price is added to the total price ''including'' the discount amount
+    2. Click on the “Add to Cart” button for all three courses
+    3. Validate that the courses are displayed in the cart with their image, name, and discount amount if available
+    4. Validate that the course prices are added to the total price 'including' the discount amounts
     5. Click on the “Place Order” button
     6. Validate a success message is displayed with the text “Your order has been placed.”
     7. Validate that the cart is empty
     */
 
-    /*********     this logic with other methods will be good with tc 04 and 05 as well  */
-    test('[TC03] - Add a Course to the Cart and Validate', async ({ page }) => {
+
+    test('[TC05] Add All Three Courses to the Cart and Validate', async ({ page }, testInfo) => {
         const shoppingCartPage = new ShoppingCartPage(page)
-        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[0].program)
-        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[1].program)
-        await shoppingCartPage.addProgramToCart(sampleShoppingCartData[2].program)
-        await page.waitForTimeout(5000)
+        const data = sampleShoppingCartData.slice(0)
+        await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
+
     })
+
+
 
 })
