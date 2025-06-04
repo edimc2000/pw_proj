@@ -30,7 +30,11 @@ export default defineConfig({
     viewport: { width: 1080, height: 1440 },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    headless: true
+    headless: false, 
+    launchOptions: {
+      // This line sets the position of the browser window to the top-left corner of the screen (coordinates 0,0).
+      args: ["--window-position=3400,0"],
+    },
   },
 
   /* Configure projects for major browsers */
