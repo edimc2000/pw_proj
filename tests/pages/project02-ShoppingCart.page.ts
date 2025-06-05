@@ -17,6 +17,8 @@ export default class ShoppingCartPage {
     getButtonCardCoursesAdd: Locator
     getTextCardCoursesFullPrice: Locator
     getImageItemsOnCart: Locator
+    getTextProgramNameItemsOnCart: Locator
+    getTextDiscountItemsOnCart: Locator
 
     constructor(page: Page) {
         this.page = page
