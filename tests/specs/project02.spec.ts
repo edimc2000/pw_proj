@@ -4,9 +4,8 @@ import path from 'path'
 import { parse } from 'csv-parse/sync'
 import ShoppingCartPage from '../pages/project02-ShoppingCart.page'
 
-
-
 test.describe('TG Shopping Cart', () => {
+    let shoppingCartPage: ShoppingCartPage
 
     // convert sampleToDoData csv to JS Object
     const csvFile = `${path.join(__dirname, '..', 'data/07-shoppingCartSampleData.csv')}`
@@ -16,6 +15,7 @@ test.describe('TG Shopping Cart', () => {
     });
 
     test.beforeEach(async ({ page }) => {
+        shoppingCartPage = new ShoppingCartPage(page)
         await page.setViewportSize({ width: 1440, height: 1440 });
         await page.goto('https://techglobal-training.com/frontend/shopping-cart')
     })
@@ -30,12 +30,12 @@ test.describe('TG Shopping Cart', () => {
     * 6. Validate that there is an “Add to Cart” button under each course which is displayed, enabled, and has the text “Add to Cart”
     */
     test('[TC01] - Available Courses Section Validation', async ({ page }) => {
-        const shoppingCartPage = new ShoppingCartPage(page)
         const countCourses = (await shoppingCartPage.getCardCourses.all()).length
 
         await test.step(`[Step 2] Validate the heading is “Available Courses”`, async () => {
             //assert heading - task 2 
             expect(await shoppingCartPage.getHeadingMain.innerText()).toContain('Available Courses')
+            
         })
 
         await test.step(`[Step 3] Validate that there are 3 courses displayed`, async () => {
@@ -86,8 +86,6 @@ test.describe('TG Shopping Cart', () => {
     */
 
     test('[TC02] - Cart Section Validation', async ({ page }) => {
-        const shoppingCartPage = new ShoppingCartPage(page)
-
         test.step(`[Step 2] - Validate the heading is “Items Added to Cart”`, async () => {
             expect(await shoppingCartPage.getSubHeadingCartItems.innerText()).toBe('Items Added to Cart')
         })
@@ -120,7 +118,6 @@ test.describe('TG Shopping Cart', () => {
     */
 
     test('[TC03] - Add a Course to the Cart and Validate', async ({ page }, testInfo) => {
-        const shoppingCartPage = new ShoppingCartPage(page)
         const data = sampleShoppingCartData.slice(0, 1)
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
     })
@@ -139,7 +136,6 @@ test.describe('TG Shopping Cart', () => {
 
 
     test('[TC04] - Add Two Courses to the Cart and Validate', async ({ page }, testInfo) => {
-        const shoppingCartPage = new ShoppingCartPage(page)
         const data = sampleShoppingCartData.slice(0, 2)
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
 
@@ -156,12 +152,9 @@ test.describe('TG Shopping Cart', () => {
     7. Validate that the cart is empty
     */
 
-
     test('[TC05] Add All Three Courses to the Cart and Validate', async ({ page }, testInfo) => {
-        const shoppingCartPage = new ShoppingCartPage(page)
         const data = sampleShoppingCartData.slice(0)
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
-
     })
 
 
