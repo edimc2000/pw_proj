@@ -69,17 +69,17 @@ test.describe('TG Shopping Cart', () => {
     })
 
     test('[TC03] - Add a Course to the Cart and Validate', async ({ shoppingCartPage }, testInfo) => {
-        const data = sampleShoppingCartData.slice(0, 1)
+        const data = sampleShoppingCartData.slice(0, 1)  // for 1 course
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
     })
 
     test('[TC04] - Add Two Courses to the Cart and Validate', async ({ shoppingCartPage }, testInfo) => {
-        const data = sampleShoppingCartData.slice(0, 2)
+        const data = sampleShoppingCartData.slice(0, 2) // for 2 courses
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
     })
 
     test('[TC05] Add All Three Courses to the Cart and Validate', async ({ shoppingCartPage }, testInfo) => {
-        const data = sampleShoppingCartData.slice(0)
+        const data = sampleShoppingCartData.slice(0) // for 3 courses
         await shoppingCartPage.addToCartAndValidate(sampleShoppingCartData, data, testInfo.title)
     })
 
