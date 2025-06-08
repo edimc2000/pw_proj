@@ -3,9 +3,8 @@
 import { test, expect, sampleShoppingCartData } from '../fixtures/pages.fixture'
 
 test.describe('TG Shopping Cart', () => {
-
+    let countCourses: number
     test('[TC01] - Available Courses Section Validation', async ({ shoppingCartPage }) => {
-        let countCourses: number
 
         await test.step(`[Step 2] Validate the heading is “Available Courses”`, async () => {
             //assert heading - task 2 
