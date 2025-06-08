@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test", 
-    "headed": "npx playwright test --headed --workers 15", 
+    "test": "npx playwright test",
+    "headed": "npx playwright test --headed --workers 15",
     "ui": "npx playwright test --ui",
     "traceon": "npx playwright test 07 --trace on"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/edimc2000/pw_proj.git"
-    
   },
   "keywords": [],
   "author": "",
@@ -24,6 +23,7 @@
   "devDependencies": {
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.24",
-    "csv-parse": "^5.6.0"
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.5.0"
   }
 }

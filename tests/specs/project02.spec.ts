@@ -1,5 +1,3 @@
-
-
 import { test, expect, sampleShoppingCartData } from '../fixtures/pages.fixture'
 
 test.describe('TG Shopping Cart', () => {

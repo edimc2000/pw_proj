@@ -1,12 +1,12 @@
 import { test as base, expect } from '@playwright/test'
-import ShoppingCartPage from '../pages/project02-ShoppingCart.page'
-
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse/sync'
+import 'dotenv/config'
+
+import ShoppingCartPage from '../pages/project02-ShoppingCart.page'
 
 // Declare type for fixtures and other variables 
-
 type sampleData = {
     's/n': string
     program: string
@@ -32,7 +32,7 @@ const sampleShoppingCartData: sampleData[] = parse(fs.readFileSync(csvFile), {
 const test = base.extend<FixtureForPages>({
     shoppingCartPage: async ({ page }, use) => {
         const shoppingCartPage = new ShoppingCartPage(page)
-        await page.goto('https://www.techglobal-training.com/frontend/shopping-cart')
+        await page.goto(`${process.env.BASE_URL}/frontend/shopping-cart`)
         await use(shoppingCartPage)
     }
 })
