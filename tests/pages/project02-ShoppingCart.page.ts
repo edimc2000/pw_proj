@@ -64,7 +64,7 @@ export default class ShoppingCartPage {
         expect(await this.getContainerOderConfirmation.innerText()).toBe('Your order has been placed.')
     }
 
-    async addToCartAndValidate(dataArr: any[], data: string[], title: string): Promise<void> {
+    async addToCartAndValidate(dataArr: any[], data, title: string): Promise<void> {
 
         let addingProgram: string
         let validatingCart: string
